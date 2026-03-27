@@ -96,7 +96,7 @@ namespace TaskManagement.API.Controllers
             try
             {
                 var board = await boardRepository.GetByIdAsync(id);
-                if (board == null) return NotFound($"Board with {id} not found!");
+                if (board == null) return NotFound($"Board with id {id} not found!");
                 // this is the important part. Instead of creating a new object, it maps the incoming DTO fields onto the existing tracked entity, so EF Core knows what changed.
                 mapper.Map(boardDto, board);
 
@@ -120,7 +120,7 @@ namespace TaskManagement.API.Controllers
             try
             {
                 var board = await boardRepository.GetByIdAsync(id);
-                if (board == null) return NotFound($"Board with {id} not found!");
+                if (board == null) return NotFound($"Board with id {id} not found!");
 
                 await boardRepository.DeleteAsync(board);
                 await boardRepository.SaveChangesAsync();
