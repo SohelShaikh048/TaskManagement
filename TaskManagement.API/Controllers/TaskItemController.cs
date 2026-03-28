@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskManagement.Application.DTOs;
 using TaskManagement.Application.Interfaces;
 using TaskManagement.Domain.Entities;
+using TaskManagement.Domain.Enums;
 
 namespace TaskManagement.API.Controllers
 {
@@ -97,6 +98,29 @@ namespace TaskManagement.API.Controllers
 
                 mapper.Map(taskItemDto, taskItem);
 
+                await repo.UpdateAsync(taskItem);
+                await repo.SaveChangesAsync();
+
+                responseDto.Result = mapper.Map<TaskItemDto>(taskItem);
+                return Ok(responseDto);
+            }
+            catch (Exception ex)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.Message = ex.Message;
+                return BadRequest(responseDto);
+            }
+        }
+
+        [HttpPut("UpdateStatus/{id:guid}")]
+        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody]TaskItemStatus itemStatus)
+        {
+            try
+            {
+                var taskItem = await repo.GetByIdAsync(id);
+                if (taskItem == null) return NotFound();
+
+                taskItem.Status = itemStatus;
                 await repo.UpdateAsync(taskItem);
                 await repo.SaveChangesAsync();
 
