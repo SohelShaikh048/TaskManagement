@@ -4,7 +4,8 @@ namespace TaskManagement.Application.Interfaces
 {
     public interface IProjectRespository
     {
-        Task<IEnumerable<Project>> GetAllAsync(string UserId);
+        Task<IEnumerable<Project>> GetAllAsync();
+        Task<IEnumerable<Project>> GetByUserAsync(string UserId);
         Task<Project> GetByIdAsync(Guid Id);
         Task AddAsync(Project project);
         Task DeleteAsync(Project project);

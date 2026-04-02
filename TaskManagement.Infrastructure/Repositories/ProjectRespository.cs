@@ -17,7 +17,13 @@ namespace TaskManagement.Infrastructure.Repositories
             db = _db;
         }
 
-        public async Task<IEnumerable<Project>> GetAllAsync(string UserId)
+        public async Task<IEnumerable<Project>> GetAllAsync()
+        {
+            var projects = await db.Projects.ToListAsync();
+            return projects;
+        }
+
+        public async Task<IEnumerable<Project>> GetByUserAsync(string UserId)
         {
             var projects = await db.Projects.Where(d => d.OwnerId == UserId).ToListAsync();
             return projects;

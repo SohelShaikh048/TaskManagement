@@ -15,6 +15,18 @@ using TaskManagement.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Setting up CORS Policy
+builder.Services.AddCors(d =>
+{
+    d.AddPolicy("AllowAngular", d =>
+    {
+        d.WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+#endregion Setting up CORS Policy
+
 // Add services to the container.
 
 builder.Services.AddDbContext<AppDbContext>(d => d.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConn")));
@@ -81,6 +93,11 @@ if (app.Environment.IsDevelopment())
         d.RoutePrefix = string.Empty;
     });
 }
+
+// IMPORTANT: CORS must be added BEFORE UseAuthorization
+#region Using CORS Policy
+app.UseCors("AllowAngular");
+#endregion Using CORS Policy
 
 app.UseHttpsRedirection();
 

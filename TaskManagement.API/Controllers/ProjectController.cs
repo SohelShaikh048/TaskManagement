@@ -8,7 +8,7 @@ using TaskManagement.Domain.Entities;
 
 namespace TaskManagement.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/project")]
     [ApiController]
     public class ProjectController : ControllerBase
@@ -33,8 +33,24 @@ namespace TaskManagement.API.Controllers
         {
             try
             {
+                var projects = await projectRespository.GetAllAsync();
+                response.Result = projects;
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message;
+            }
+            return Ok(response);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetByUser()
+        {
+            try
+            {
                 var userId = GetUserId();
-                var projects = await projectRespository.GetAllAsync(userId);
+                var projects = await projectRespository.GetByUserAsync(userId);
                 response.Result = projects;
             }
             catch (Exception ex)
