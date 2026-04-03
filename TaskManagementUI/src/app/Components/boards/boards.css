@@ -1,0 +1,25 @@
+.table th {
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+}

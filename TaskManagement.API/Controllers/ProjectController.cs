@@ -45,6 +45,7 @@ namespace TaskManagement.API.Controllers
         }
 
         [HttpGet]
+        [Route("GetByUser")]
         public async Task<IActionResult> GetByUser()
         {
             try
