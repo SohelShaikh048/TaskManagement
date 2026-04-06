@@ -8,7 +8,7 @@ using TaskManagement.Domain.Entities;
 
 namespace TaskManagement.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/project")]
     [ApiController]
     public class ProjectController : ControllerBase
