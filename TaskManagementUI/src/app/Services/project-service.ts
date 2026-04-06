@@ -17,7 +17,7 @@ export class ProjectService {
   }
 
   GetByUser(): Observable<ResponseDto> {
-    return this.http.get<ResponseDto>(this.baseUrl);
+    return this.http.get<ResponseDto>(`${this.baseUrl}/GetByUser`);
   }
 
   GetById(id: string): Observable<ResponseDto> {

@@ -1,0 +1,11 @@
+/* 1. Ensure the app component takes up the full screen height */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 2. This class tells the main content to take up all available empty space */
+.flex-grow-1 {
+  flex-grow: 1;
+}

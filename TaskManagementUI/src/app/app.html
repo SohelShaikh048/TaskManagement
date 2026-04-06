@@ -16,7 +16,7 @@
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="/TaskItems">TaskItems</a>
         </li>
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
             aria-expanded="false">Dropdown</a>
           <div class="dropdown-menu">
@@ -26,9 +26,9 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Separated link</a>
           </div>
-        </li>
+        </li> -->
       </ul>
-      <!-- <ul class="navbar-nav">
+      <ul class="navbar-nav">
         @if (isLoggedIn()) {
         <li class="nav-item">
           <span class="nav-link">{{loggedInUserMail()}}</span>
@@ -36,19 +36,23 @@
         }
         <li class="nav-item">
           @if (!isLoggedIn()) {
-          <a class="nav-link" routerLink="Auth/LoginReactive">Login</a>
+          <a class="nav-link" routerLink="Auth/login">Login</a>
           }
           @else {
           <button class="nav-link" (click)="logout()">Logout</button>
           }
         </li>
-      </ul> -->
+      </ul>
     </div>
   </div>
 </nav>
 
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
+<main class="flex-grow-1">
+  <div class="container my-4">
+    <router-outlet></router-outlet>
+  </div>
+</main>
 
-<h1 style="text-align: center;">Footer</h1>
+<footer class="py-4 bg-light border-top">
+  <h1 style="text-align: center;">SilverSoft &copy; {{currentDate.getFullYear()}}</h1>
+</footer>
