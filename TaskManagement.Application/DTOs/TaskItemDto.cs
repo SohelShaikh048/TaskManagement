@@ -8,8 +8,9 @@ namespace TaskManagement.Application.DTOs
         public string Title { get; set; } = default!;
         public string Description { get; set; } = default!;
         public TaskItemStatus Status { get; set; }
-        public int Priority { get; set; }
+        public TaskPriorityEnum Priority { get; set; }
         public DateTime? DueDate { get; set; }
         public Guid BoardId { get; set; }
+        public Guid? AssignedToUserId { get; set; }
     }
 }

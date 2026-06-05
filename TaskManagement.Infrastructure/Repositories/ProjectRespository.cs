@@ -23,9 +23,9 @@ namespace TaskManagement.Infrastructure.Repositories
             return projects;
         }
 
-        public async Task<IEnumerable<Project>> GetByUserAsync(string UserId)
+        public async Task<IEnumerable<Project>> GetProjectsByUserAsync(string UserId)
         {
-            var projects = await db.Projects.Where(d => d.OwnerId == UserId).ToListAsync();
+            var projects = await db.Projects.Where(d => d.OwnerId == UserId || d.ProjectMembers.Any(pm => pm.UserId == UserId)).ToListAsync();
             return projects;
         }
 
@@ -42,6 +42,11 @@ namespace TaskManagement.Infrastructure.Repositories
         public async Task DeleteAsync(Project project)
         {
             db.Projects.Remove(project);
+        }
+
+        public async Task UpdateAsync(Project updated)
+        {
+            db.Projects.Update(updated);
         }
 
         public async Task SaveChangesAsync() => await db.SaveChangesAsync();

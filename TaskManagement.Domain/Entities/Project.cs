@@ -11,5 +11,6 @@ namespace TaskManagement.Domain.Entities
         public ApplicationUser Owner { get; set; } = default!;
 
         public ICollection<Board> Boards { get; set; } = new List<Board>();
+        public ICollection<ProjectMember> ProjectMembers { get; set; } = new List<ProjectMember>();
     }
 }

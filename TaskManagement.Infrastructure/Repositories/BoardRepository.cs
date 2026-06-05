@@ -56,5 +56,11 @@ namespace TaskManagement.Infrastructure.Repositories
         }
 
         public async Task SaveChangesAsync() => await db.SaveChangesAsync();
+
+        public async Task<IEnumerable<Board>> GetBoardsByUserAsync(string UserId)
+        {
+            var MyBoards = await db.Boards.Where(d => d.Project.OwnerId == UserId || d.Project.ProjectMembers.Any(pm => pm.UserId == UserId)).ToListAsync();
+            return MyBoards;
+        }
     }
 }

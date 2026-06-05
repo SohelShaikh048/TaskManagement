@@ -22,7 +22,7 @@ namespace TaskManagement.Infrastructure.Repositories
             return await db.TaskItems.ToListAsync();
         }
 
-        public async Task<IEnumerable<TaskItem>> GetAllByBoardAsync(Guid Id)
+        public async Task<IEnumerable<TaskItem>> GetTasksByBoardAsync(Guid Id)
         {
             return await db.TaskItems.Where(d => d.BoardId == Id).ToListAsync();
         }
@@ -52,5 +52,16 @@ namespace TaskManagement.Infrastructure.Repositories
             await db.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<TaskItem>> GetTasksByUserAsync(string userId)
+        {
+            var myTasks = await db.TaskItems.Where(d => d.AssignedToUserId == userId || d.Board.Project.ProjectMembers.Any(m => m.UserId == userId)).ToListAsync();
+            return myTasks;
+        }
+
+        public async Task<IEnumerable<TaskItem>> GetUserTasksAsync(string userId)
+        {
+            var myTasks = await db.TaskItems.Where(d => d.AssignedToUserId == userId).ToListAsync();
+            return myTasks;
+        }
     }
 }

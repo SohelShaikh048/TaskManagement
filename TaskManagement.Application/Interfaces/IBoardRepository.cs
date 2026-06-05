@@ -8,5 +8,7 @@ namespace TaskManagement.Application.Interfaces
     public interface IBoardRepository : IGenericRepository<Board>
     {
         Task<IEnumerable<Board>> GetAllByProjectAsync(Guid projectId);
+
+        Task<IEnumerable<Board>> GetBoardsByUserAsync(string UserId);
     }
 }

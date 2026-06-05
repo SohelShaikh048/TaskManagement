@@ -8,10 +8,13 @@ namespace TaskManagement.Domain.Entities
         public string Title { get; set; } = default!;
         public string Description { get; set; } = default!;
         public TaskItemStatus Status { get; set; }
-        public int Priority { get; set; }
+        public TaskPriorityEnum Priority { get; set; }
         public DateTime? DueDate { get; set; }
 
         public Guid BoardId { get; set; }
         public Board Board { get; set; } = default!;
+
+        public string? AssignedToUserId { get; set; }
+        public ApplicationUser? AssignedToUser { get; set; }
     }
 }

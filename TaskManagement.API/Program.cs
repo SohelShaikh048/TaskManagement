@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,14 @@ builder.Services.AddCors(d =>
 builder.Services.AddDbContext<AppDbContext>(d => d.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConn")));
 
 #region Automapper
+// ❌ Old way - throws your error in v13+
 builder.Services.AddAutoMapper(typeof(AutomapperConfig));
+
+// ✅ New way for v13+
+//builder.Services.AddSingleton(new MapperConfiguration(cfg =>
+//{
+//    cfg.AddProfile<AutomapperConfig>();
+//}).CreateMapper());
 #endregion Automapper
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
@@ -65,6 +73,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProjectRespository, ProjectRespository>();
 builder.Services.AddScoped<IBoardRepository, BoardRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IProjectMemberRepository, ProjectMemberRepository>();
 
 #region for accepting string values for enums in Postman
 builder.Services.AddControllers()

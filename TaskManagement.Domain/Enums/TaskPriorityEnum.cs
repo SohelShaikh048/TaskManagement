@@ -4,11 +4,11 @@ using System.Text;
 
 namespace TaskManagement.Domain.Enums
 {
-    public enum TaskItemStatus
+    public enum TaskPriorityEnum
     {
-        ToDo,
-        InProgress,
-        Done,
-        Blocked
+        Low = 1,
+        Medium = 2, 
+        High = 3,
+        Critical = 4
     }
 }

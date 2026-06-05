@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TaskManagement.Application.DTOs;
 using TaskManagement.Application.Interfaces;
 using TaskManagement.Domain.Entities;
@@ -134,6 +135,24 @@ namespace TaskManagement.API.Controllers
                 responseDto.Message=ex.Message;
                 return BadRequest(responseDto);
             }
+        }
+
+        [HttpGet("GetBoardsByUser")]
+        public async Task<IActionResult> GetBoardsByUser()
+        {
+            try
+            {
+                string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var boards = await boardRepository.GetBoardsByUserAsync(userId);
+                responseDto.Result = mapper.Map<List<BoardDto>>(boards);
+            }
+            catch (Exception ex)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.Message = ex.Message;
+                return BadRequest(responseDto);
+            }
+            return Ok(responseDto);
         }
 
     }

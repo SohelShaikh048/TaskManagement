@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TaskManagement.Application.DTOs;
 using TaskManagement.Application.Interfaces;
 using TaskManagement.Domain.Entities;
@@ -20,6 +21,12 @@ namespace TaskManagement.API.Controllers
             repo = _repo;
             mapper = _mapper;
             responseDto = new();
+        }
+
+        private string GetCurUserId()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return userId;
         }
 
         [HttpGet]
@@ -45,7 +52,7 @@ namespace TaskManagement.API.Controllers
                 responseDto.IsSuccess = false;
                 responseDto.Message = ex.Message;
                 return BadRequest(ex.Message);
-            }            
+            }
         }
 
         [HttpGet]
@@ -54,7 +61,7 @@ namespace TaskManagement.API.Controllers
         {
             try
             {
-                var tasks = await repo.GetAllByBoardAsync(boardId);
+                var tasks = await repo.GetTasksByBoardAsync(boardId);
                 responseDto.Result = mapper.Map<IEnumerable<TaskItemDto>>(tasks);
                 return Ok(responseDto);
             }
@@ -83,7 +90,7 @@ namespace TaskManagement.API.Controllers
             catch (Exception ex)
             {
                 responseDto.IsSuccess = false;
-                responseDto.Message=ex.Message;
+                responseDto.Message = ex.Message;
                 return BadRequest(responseDto);
             }
         }
@@ -113,7 +120,7 @@ namespace TaskManagement.API.Controllers
         }
 
         [HttpPut("UpdateStatus/{id:guid}")]
-        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody]TaskItemStatus itemStatus)
+        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] TaskItemStatus itemStatus)
         {
             try
             {
@@ -154,6 +161,43 @@ namespace TaskManagement.API.Controllers
                 responseDto.Message = ex.Message;
                 return BadRequest(responseDto);
             }
+        }
+
+        [HttpGet("GetTasksByUser")]
+        public async Task<IActionResult> GetTasksByUser()
+        {
+            try
+            {
+                var userId = GetCurUserId();
+                var tasks = await repo.GetTasksByUserAsync(userId);
+                responseDto.Result = mapper.Map<IEnumerable<TaskItemDto>>(tasks);
+                return Ok(responseDto);
+            }
+            catch (Exception ex)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.Message = ex.Message;
+                return BadRequest(responseDto);
+            }
+        }
+
+        [HttpGet("GetMyTasks")]
+        public async Task<IActionResult> GetMyTasks()
+        {
+            try
+            {
+                var userId = GetCurUserId();
+                var tasks = await repo.GetUserTasksAsync(userId);
+                responseDto.Result = mapper.Map<IEnumerable<TaskItemDto>>(tasks);
+                return Ok(responseDto);
+            }
+            catch (Exception ex)
+            {
+                responseDto.IsSuccess = false;
+                responseDto.Message = ex.Message;
+                return BadRequest(responseDto);
+            }
+
         }
 
     }

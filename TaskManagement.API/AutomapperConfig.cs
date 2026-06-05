@@ -19,6 +19,10 @@ namespace TaskManagement.API
             CreateMap<TaskItem, TaskItemDto>().ReverseMap()
                 .ForMember(dest => dest.Id, d => d.Ignore())
                 .ForMember(dest => dest.CreatedAt, d => d.Ignore());
+
+            CreateMap<ProjectMember, ProjectMemberDto>().ReverseMap()
+                .ForMember(dest => dest.Id, d => d.Ignore())
+                .ForMember(dest => dest.CreatedAt, d => d.Ignore());
         }
     }
 }

@@ -4,11 +4,10 @@ using System.Text;
 
 namespace TaskManagement.Domain.Enums
 {
-    public enum TaskItemStatus
+    public enum MemberRoleEnum
     {
-        ToDo,
-        InProgress,
-        Done,
-        Blocked
+        Admin = 0,
+        Member = 1,
+        Viewer = 2
     }
 }
